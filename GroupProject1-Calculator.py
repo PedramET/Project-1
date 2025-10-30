@@ -107,7 +107,7 @@ def display_window():
 
 
 '''
-buttons part is not completed, 
+buttons part is not complete, 
 
 '''
 
