@@ -61,6 +61,9 @@ def display_window():
     entry_display.grid(row=0, column=0, columnspan=4, padx=20, pady=20)
     
     def add_to_expression(value):
+        test_entry = entry_display.get()
+        if test_entry and test_entry[-1] in "+-×÷" and value in "+-×÷":
+            entry_display.delete(len(test_entry) - 1, tk.END)
         entry_display.insert(tk.END, value)
 
     def checking_expression():
@@ -68,6 +71,10 @@ def display_window():
         expression = expression.replace("×", "*")
         expression = expression.replace("÷", "/")
         expression = expression.replace("^", "**")
+        expression = expression.replace("√", "sqrt(")
+        expression = expression.replace("sin", "sin(")
+        if expression.count("(") > expression.count(")"):
+            expression += ")"
         result = evaluate(expression)
         entry_display.delete(0, tk.END)
         entry_display.insert(0, str(result))
@@ -75,11 +82,11 @@ def display_window():
     def display_buttons():
         buttons = [
             ("C",1,0),("(",1,1),(")",1,2),("←",1,3),
-            ("",2,0),("",2,1),("",2,2),("=",2,3),
-            ("7",3,0),("8",3,1),("9",3,2),("÷",3,3),
-            ("4",4,0),("5",4,1),("6",4,2),("×",4,3),
-            ("1",5,0),("2",5,1),("3",5,2),("-",5,3),
-            ("",6,0),("0",6,1),("",6,2),("+",6,3),
+            ("sin",2,0),("",2,1),("√",2,2),("÷",2,3),
+            ("7",3,0),("8",3,1),("9",3,2),("×",3,3),
+            ("4",4,0),("5",4,1),("6",4,2),("-",4,3),
+            ("1",5,0),("2",5,1),("3",5,2),("+",5,3),
+            ("0",6,0),(".",6,1),("^",6,2),("=",6,3),
         ]
 
         for (text,row,col) in buttons:
@@ -89,7 +96,12 @@ def display_window():
                 operation = lambda: entry_display.delete(len(entry_display.get()) - 1, tk.END)
             elif text == "=":
                 operation = checking_expression
-
+            elif text == "^":
+                operation = lambda: add_to_expression("^")
+            elif text == "√": 
+                operation = lambda: add_to_expression("√")
+            elif text == "sin":
+                operation = lambda: add_to_expression("sin")
                 
             else:
                 operation = lambda x = text: add_to_expression(x)
