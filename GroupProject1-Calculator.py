@@ -89,6 +89,8 @@ def display_window():
                 operation = lambda: entry_display.delete(len(entry_display.get()) - 1, tk.END)
             elif text == "=":
                 operation = checking_expression
+
+                
             else:
                 operation = lambda x = text: add_to_expression(x)
             tk.Button(window,text=text, width=5, height=3,
@@ -104,6 +106,9 @@ def display_window():
     window.mainloop()
 
 
+'''
+buttons part is not completed, 
 
+'''
 
 display_window()
