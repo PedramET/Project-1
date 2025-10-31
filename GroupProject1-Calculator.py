@@ -6,51 +6,30 @@ import tkinter as tk
 
 
 
-def power_function(x,y):
-    return math.pow(x,y)
-
-def sqrt_function(x):
-    return math.sqrt(x)
-
-def sin_function(x):
-    return math.sin(math.radians(x))
-
-def cos_function(x):
-    return math.cos(math.radians(x))
-
-def tan_function(x):
-    return math.tan(math.radians(x))
-
-def cot_function(x):
-    return 1 / math.tan(math.radians(x))
-
-def log10_function(x):
-    return math.log10(x)
-
-def ln_function(x):
-    return math.log(x)
-
-def e_function(x):
-    return math.e
-
-def pi_function(x):
-    return math.pi
-
+def power_function(x,y):   return math.pow(x,y)
+def sqrt_function(x):      return math.sqrt(x)
+def sin_function(x):       return math.sin(math.radians(x))
+def cos_function(x):       return math.cos(math.radians(x))
+def tan_function(x):       return math.tan(math.radians(x))
+def cot_function(x):       return 1 / math.tan(math.radians(x))
+def log10_function(x):     return math.log10(x) 
+def ln_function(x):        return math.log(x)
+def e_function(x):         return math.e
+def pi_function(x):        return math.pi
 
 math_operations = {
-    "^":    power_function,
-    "sqrt": sqrt_function,
-    "sin":  sin_function,
-    "cos":  cos_function,
-    "tan":  tan_function,
-    "cot":  cot_function,
-    "log":  log10_function,
-    "ln":   ln_function,
-    "e":    e_function,
-    "pi":   pi_function,
+    "^":         power_function,
+    "sqrt":      sqrt_function,
+    "sin":       sin_function,
+    "cos":       cos_function,
+    "tan":       tan_function,
+    "cot":       cot_function,
+    "log":       log10_function,
+    "ln":        ln_function,
+    "e":         e_function,
+    "pi":        pi_function,
 }
     
-
 def evaluate(expression):
     try:
         result = eval(expression, math_operations)
@@ -77,10 +56,11 @@ def display_window():
     def checking_expression():
         expression = entry_display.get()
         replacements = {
-            "×": "*",
-            "÷": "/",
-            "^": "**",
-            "√": "sqrt(",
+            "×":   "*",
+            "÷":   "/",
+            "^":   "**",
+            "√":   "sqrt(",
+            "%":   "/100",
             "sin": "sin(",
             "cos": "cos(",
             "tan": "tan(",
@@ -100,7 +80,7 @@ def display_window():
     def display_buttons():
         buttons = [
             ("C",1,0),("(",1,1),(")",1,2),("←",1,3),
-            ("...",2,0),("π",2,1),("√",2,2),("÷",2,3),
+            ("...",2,0),("%",2,1),("√",2,2),("÷",2,3),
             ("7",3,0),("8",3,1),("9",3,2),("×",3,3),
             ("4",4,0),("5",4,1),("6",4,2),("-",4,3),
             ("1",5,0),("2",5,1),("3",5,2),("+",5,3),
@@ -118,10 +98,8 @@ def display_window():
                 operation = lambda: add_to_expression("^")
             elif text == "√": 
                 operation = lambda: add_to_expression("√")
-            elif text == "sin":
-                operation = lambda: add_to_expression("sin")
-            elif text == "π":
-                operation = lambda: add_to_expression(str(math.pi))
+            elif text == "%":
+                operation = lambda: add_to_expression("%")
             elif text == "...":
                 operation = extra_buttons
             else:
@@ -129,7 +107,7 @@ def display_window():
             tk.Button(window,text=text, width=5, height=3,
                      bg="#464646",fg="#FFFFFF",font=("Helvetica", 11, "bold"),
                      command=operation).grid(row=row, column=col, sticky="nswe", padx=1 , pady=1)
-            
+             
     def extra_buttons():
         second_window = tk.Toplevel()
         second_window.title("Calculator")
@@ -138,7 +116,7 @@ def display_window():
         second_window.configure(bg="#222222")
         more_buttons = [
             ("sin",1,0),("cos",1,1),("tan",1,2),("cot",1,3),
-            ("ln",2,0),("log",2,1),("e",2,2),("",2,3),
+            ("ln",2,0),("log",2,1),("e",2,2),("π",2,3),
         ]
 
         for (text,row,col) in more_buttons:
@@ -156,7 +134,8 @@ def display_window():
                 operation = lambda: add_to_expression("log")
             elif text == "e":
                 operation = lambda: add_to_expression(str(math.e))
-
+            elif text == "π":
+                operation = lambda: add_to_expression(str(math.pi))
 
             tk.Button(second_window, text= text, width=6, height=2, 
                       bg="#464646", fg="#FFFFFF", font=("Helvetica", 11, "bold"),
@@ -164,11 +143,5 @@ def display_window():
 
     display_buttons()
     window.mainloop()
-
-
-'''
-I dont know what do put for the last button in extra_buttions(), 
-
-'''
 
 display_window()
