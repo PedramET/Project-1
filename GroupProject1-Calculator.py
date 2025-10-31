@@ -24,11 +24,17 @@ def tan_function(x):
 def cot_function(x):
     return 1 / math.tan(math.radians(x))
 
-def log_function(x):
+def log10_function(x):
+    return math.log10(x)
+
+def ln_function(x):
     return math.log(x)
 
 def e_function(x):
     return math.e
+
+def pi_function(x):
+    return math.pi
 
 
 math_operations = {
@@ -38,8 +44,10 @@ math_operations = {
     "cos":  cos_function,
     "tan":  tan_function,
     "cot":  cot_function,
-    "log":  log_function,
+    "log":  log10_function,
+    "ln":   ln_function,
     "e":    e_function,
+    "pi":   pi_function,
 }
     
 
@@ -68,11 +76,21 @@ def display_window():
 
     def checking_expression():
         expression = entry_display.get()
-        expression = expression.replace("×", "*")
-        expression = expression.replace("÷", "/")
-        expression = expression.replace("^", "**")
-        expression = expression.replace("√", "sqrt(")
-        expression = expression.replace("sin", "sin(")
+        replacements = {
+            "×": "*",
+            "÷": "/",
+            "^": "**",
+            "√": "sqrt(",
+            "sin": "sin(",
+            "cos": "cos(",
+            "tan": "tan(",
+            "cot": "cot(",
+            "log": "log(",
+            "ln":  "ln(",
+        }
+        for (old, new) in replacements.items():
+            expression = expression.replace(old, new)
+
         if expression.count("(") > expression.count(")"):
             expression += ")"
         result = evaluate(expression)
@@ -82,7 +100,7 @@ def display_window():
     def display_buttons():
         buttons = [
             ("C",1,0),("(",1,1),(")",1,2),("←",1,3),
-            ("sin",2,0),("",2,1),("√",2,2),("÷",2,3),
+            ("...",2,0),("π",2,1),("√",2,2),("÷",2,3),
             ("7",3,0),("8",3,1),("9",3,2),("×",3,3),
             ("4",4,0),("5",4,1),("6",4,2),("-",4,3),
             ("1",5,0),("2",5,1),("3",5,2),("+",5,3),
@@ -102,24 +120,54 @@ def display_window():
                 operation = lambda: add_to_expression("√")
             elif text == "sin":
                 operation = lambda: add_to_expression("sin")
-                
+            elif text == "π":
+                operation = lambda: add_to_expression(str(math.pi))
+            elif text == "...":
+                operation = extra_buttons
             else:
                 operation = lambda x = text: add_to_expression(x)
             tk.Button(window,text=text, width=5, height=3,
                      bg="#464646",fg="#FFFFFF",font=("Helvetica", 11, "bold"),
                      command=operation).grid(row=row, column=col, sticky="nswe", padx=1 , pady=1)
+            
+    def extra_buttons():
+        second_window = tk.Toplevel()
+        second_window.title("Calculator")
+        second_window.geometry("265x105")
+        second_window.resizable(False,False)
+        second_window.configure(bg="#222222")
+        more_buttons = [
+            ("sin",1,0),("cos",1,1),("tan",1,2),("cot",1,3),
+            ("ln",2,0),("log",2,1),("e",2,2),("",2,3),
+        ]
+
+        for (text,row,col) in more_buttons:
+            if text == "sin":
+                operation = lambda: add_to_expression("sin")
+            elif text == "cos":
+                operation = lambda: add_to_expression("cos")
+            elif text == "tan":
+                operation = lambda: add_to_expression("tan")
+            elif text == "cot":
+                operation = lambda: add_to_expression("cot")
+            elif text == "ln":
+                operation = lambda: add_to_expression("ln")
+            elif text == "log":
+                operation = lambda: add_to_expression("log")
+            elif text == "e":
+                operation = lambda: add_to_expression(str(math.e))
 
 
-
-
-
+            tk.Button(second_window, text= text, width=6, height=2, 
+                      bg="#464646", fg="#FFFFFF", font=("Helvetica", 11, "bold"),
+                      command=operation).grid(row=row, column= col, sticky="nswe", padx=1, pady=1)
 
     display_buttons()
     window.mainloop()
 
 
 '''
-buttons part is not complete, 
+I dont know what do put for the last button in extra_buttions(), 
 
 '''
 
