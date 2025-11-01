@@ -7,29 +7,23 @@ import tkinter as tk
 
 
 def power_function(x,y):   return math.pow(x,y)
-def sqrt_function(x):      return math.sqrt(x)
 def sin_function(x):       return math.sin(math.radians(x))
 def cos_function(x):       return math.cos(math.radians(x))
 def tan_function(x):       return math.tan(math.radians(x))
 def cot_function(x):       return 1 / math.tan(math.radians(x))
-def log10_function(x):     return math.log10(x) 
-def ln_function(x):        return math.log(x)
-def e_function(x):         return math.e
-def pi_function(x):        return math.pi
 
 math_operations = {
     "^":         power_function,
-    "sqrt":      sqrt_function,
+    "sqrt":      math.sqrt,
     "sin":       sin_function,
     "cos":       cos_function,
     "tan":       tan_function,
     "cot":       cot_function,
-    "log":       log10_function,
-    "ln":        ln_function,
-    "e":         e_function,
-    "pi":        pi_function,
+    "log":       math.log10,
+    "ln":        math.log,
+    "e":         math.e,
+    "pi":        math.pi,
 }
-    
 def evaluate(expression):
     try:
         result = eval(expression, math_operations)
