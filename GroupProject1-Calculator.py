@@ -8,7 +8,7 @@ import tkinter as tk
 
 def power_function(x,y):   return math.pow(x,y)
 def sin_function(x):       return math.sin(math.radians(x))
-def cos_function(x):       return math.cos(math.radians(x))
+def cos_function(x):       return round(math.cos(math.radians(x)), 10) 
 def tan_function(x):       return math.tan(math.radians(x))
 def cot_function(x):       return 1 / math.tan(math.radians(x))
 
